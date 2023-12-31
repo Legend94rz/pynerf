@@ -14,12 +14,12 @@ NOTE: Only support LLFF datasets for now.
 
 ## TODO
 
-[] Train/Val/Test dataset class
-[] Supoort `--no_ndc --spherify --lindisp`
-[] Export mesh/mp4
-[] Benchmark & comparison
-[] Config or pass hyper-params via cmd
-[] Other format / source of data
+- [ ] Train/Val/Test dataset class
+- [ ] Supoort `--no_ndc --spherify --lindisp`
+- [ ] Export mesh/mp4
+- [ ] Benchmark & comparison
+- [ ] Config or pass hyper-params via cmd
+- [ ] Other format / source of data
 
 
 ## THANKS
