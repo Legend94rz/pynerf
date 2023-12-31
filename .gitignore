@@ -1,0 +1,6 @@
+__pycache__/
+*.jpg
+*.pkl
+*.pt
+logs/
+*.ipynb
