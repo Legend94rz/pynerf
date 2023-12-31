@@ -1,6 +1,6 @@
 # pynerf
 
-Just another implementation of [vanilla nerf]() using PyTorch.
+Just another implementation of [vanilla nerf](https://arxiv.org/abs/2003.08934) using PyTorch.
 
 This project reorganizes the code structure with a nerfstudio-like style, and aims to be more modular and easy to understand.
 
