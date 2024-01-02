@@ -5,6 +5,7 @@ import torch
 from tqdm import tqdm
 import cv2
 import pickle as pkl
+from itertools import cycle
 from pynerf.data import load_data, get_rays_np
 from pynerf.model import VanillaNeRF
 dev = 'cuda'
@@ -63,8 +64,8 @@ if __name__ == "__main__":
     rays_rgb = np.concatenate([rays, images[:, None]], 1) # [N, ro+rd+rgb, H, W, 3]
     train_rays = torch.tensor(rearrange(rays_rgb[i_train], 'n f h w c -> (n h w) f c', f=3, c=3).astype('float32'))
 
-    it_val = iter(zip(poses[i_val], torch.tensor(images[i_val])))
-    it_test_pose = iter(render_poses)   # TODO: build testset. next() could offer more information: pose/image/...
+    it_val = iter(cycle(zip(poses[i_val], torch.tensor(images[i_val]))))
+    it_test_pose = iter(cycle(render_poses))   # TODO: build testset. next() could offer more information: pose/image/...
 
     ## build model & opt
     model = VanillaNeRF(

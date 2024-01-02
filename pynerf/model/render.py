@@ -26,7 +26,7 @@ class Render(nn.Module):
 
         rgb = torch.sigmoid(field_output["rgb"])  # [B, n_samples, 3]
         noise = 0.
-        if self.raw_noise_std > 0.:
+        if self.training and self.raw_noise_std > 0.:
             noise = torch.randn_like(field_output['density']) * self.raw_noise_std
         alpha = 1.0 - torch.exp(-F.relu( field_output["density"] + noise ).squeeze(-1) * dists)   # [B, n_samples]
 

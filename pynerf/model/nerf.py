@@ -208,8 +208,9 @@ class VanillaNeRF(nn.Module):
         )
         if_dim4 = {}
         if batch["gt_image"].ndim == 3:
-            fine_rgb = repeat(pred["fine_rgb"], 'h w c -> n c h w', n=1)
-            image = repeat(batch["gt_image"], 'h w c -> n c h w', n=1)
+            # clip to solve: Expected both input arguments to be normalized tensors with shape ... when all values are expected to be in the [0, 1] range.
+            fine_rgb = torch.clip(repeat(pred["fine_rgb"], 'h w c -> n c h w', n=1), .0, 1.)
+            image = torch.clip(repeat(batch["gt_image"], 'h w c -> n c h w', n=1), .0, 1.)
             if_dim4 = dict(
                 fine_ssim=float(self.ssim(fine_rgb, image)),
                 fine_lpips=float(self.lpips(fine_rgb, image))

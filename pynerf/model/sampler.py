@@ -15,7 +15,7 @@ class UniformSampler(nn.Module):
         n_rays = len(rays_o)
         z_vals = near * (1. - self.t_vals) + far * self.t_vals
         z_vals = z_vals.expand([n_rays, self.n_samples])
-        if self.perturb > 0.:
+        if self.training and self.perturb > 0.:
             # get intervals between samples
             mids = .5 * (z_vals[...,1:] + z_vals[...,:-1])
             upper = torch.cat([mids, z_vals[...,-1:]], -1)
@@ -73,7 +73,7 @@ class PDFSampler(nn.Module):
 
     def forward(self, rays_o, rays_d, z_vals, weights):
         z_vals_mid = .5 * (z_vals[...,1:] + z_vals[...,:-1])
-        z_samples = self.sample_pdf(z_vals_mid, weights[...,1:-1], self.n_samples, det=(self.perturb==0.))
+        z_samples = self.sample_pdf(z_vals_mid, weights[...,1:-1], self.n_samples, det=(self.perturb==0. and not self.training))
         z_samples = z_samples.detach()
 
         z_vals, _ = torch.sort(torch.cat([z_vals, z_samples], -1), -1)
